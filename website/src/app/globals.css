@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-muted: #f1f5f9;
+  --bg-card: #ffffff;
+  --navy: #0a1628;
+  --navy-light: #132238;
+  --cyan: #0891b2;
+  --cyan-dim: #0e7490;
+  --blue: #2563eb;
+  --blue-bright: #3b82f6;
+  --text: #0f172a;
+  --subtext: #64748b;
+  --border: rgba(15, 23, 42, 0.08);
+  --glow: rgba(37, 99, 235, 0.08);
+  --radius: 1rem;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-muted: var(--bg-muted);
+  --color-navy: var(--navy);
+  --color-navy-light: var(--navy-light);
+  --color-cyan: var(--cyan);
+  --color-cyan-dim: var(--cyan-dim);
+  --color-blue: var(--blue);
+  --color-blue-bright: var(--blue-bright);
+  --color-text: var(--text);
+  --color-subtext: var(--subtext);
+  --color-border: var(--border);
+  --font-display: var(--font-outfit);
+  --font-sans: var(--font-outfit);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+body {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(37, 99, 235, 0.04), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(8, 145, 178, 0.03), transparent 50%),
+    var(--bg-primary);
+  color: var(--text);
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  font-weight: 400;
+  overflow-x: clip;
+}
+
+::selection {
+  background: rgba(37, 99, 235, 0.15);
+  color: var(--navy);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--cyan) 50%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.04);
+}
+
+.surface-muted {
+  background: var(--bg-secondary);
+}
+
+.section-pad {
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+.page-pad-top {
+  padding-top: 5.5rem;
+}
+
+@media (min-width: 768px) {
+  .page-pad-top {
+    padding-top: 6rem;
+  }
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.hero-glow {
+  background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.06), transparent 60%);
+}
+
+.card-hover {
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(37, 99, 235, 0.15);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(37, 99, 235, 0.06);
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+  background: #ffffff;
+  color: var(--text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+.hero-cinema__frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero-cinema__video {
+  object-fit: cover;
+  object-position: center 30%;
+  filter: saturate(0.95) contrast(1.02) brightness(0.98);
+}
+
+.hero-cinema__overlay {
+  background:
+    linear-gradient(
+      105deg,
+      rgba(255, 255, 255, 0.97) 0%,
+      rgba(255, 255, 255, 0.92) 32%,
+      rgba(255, 255, 255, 0.55) 58%,
+      rgba(255, 255, 255, 0.25) 100%
+    ),
+    linear-gradient(to top, rgba(255, 255, 255, 0.85) 0%, transparent 42%);
+}
+
+@media (min-width: 1024px) {
+  .hero-cinema__video {
+    object-position: center 20%;
+  }
+}
