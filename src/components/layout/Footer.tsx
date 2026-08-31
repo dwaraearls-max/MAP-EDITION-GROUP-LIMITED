@@ -12,12 +12,13 @@ const footerLinks = {
     { href: "/about#capabilities", label: "Capabilities" },
   ],
   Services: [
-    { href: "/services/car-rentals", label: "Car Rentals" },
+    { href: "/services/car-rentals", label: "Car Rental & Fleet" },
     { href: "/services/technology", label: "Technology" },
     { href: "/services/stationery", label: "Stationery" },
     { href: "/services/appliances", label: "Appliances" },
-    { href: "/services/construction-equipment", label: "Construction Equipment" },
-    { href: "/services/general-supplies", label: "General Supplies" },
+    { href: "/construction", label: "Construction" },
+    { href: "/general-supplies", label: "General Supplies" },
+    { href: "/agriculture", label: "Agribusiness" },
   ],
   Enterprise: [
     { href: "/technology/lenovo", label: "Lenovo Solutions" },

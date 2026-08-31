@@ -1,6 +1,7 @@
 import { Hero, ServicesGrid, TrustBar } from "@/components/sections/Hero";
 import {
   AboutPreview,
+  AgriculturePreview,
   Capabilities,
   ContactPreview,
   DeploymentTimeline,
@@ -20,6 +21,7 @@ export default function HomePage() {
       <ServicesGrid />
       <TechnologyPreview />
       <DeploymentTimeline />
+      <AgriculturePreview />
       <WhyChooseUs />
       <Capabilities />
       <PartnersClients />

@@ -8,7 +8,7 @@ import { Container, PageHero } from "@/components/ui/Container";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Explore MAP Edition Group's six business sectors — car rentals, technology, stationery, appliances, construction equipment and general supplies.",
+    "Explore MAP Edition Group's seven business sectors — car rental and fleet management, technology, stationery, appliances, construction, general supplies and agribusiness.",
 };
 
 export default function ServicesPage() {
@@ -16,7 +16,7 @@ export default function ServicesPage() {
     <>
       <PageHero
         eyebrow="Our Business Solutions"
-        title="Six Sectors. One Trusted Partner."
+        title="Seven Sectors. One Trusted Partner."
         description="Quality products, professional services and reliable solutions across multiple industries."
       />
       <section className="section-pad">

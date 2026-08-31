@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Car Rentals",
+  title: "Car Rental & Fleet Management",
   description:
-    "Reliable car rentals for business and leisure in Ghana. Short-term and long-term vehicle rental enquiries.",
+    "Reliable, professional car rental and fleet management solutions across Ghana — daily to long-term rentals, chauffeur services, and full fleet operations.",
 };
 
 export default function CarRentalsLayout({ children }: { children: React.ReactNode }) {

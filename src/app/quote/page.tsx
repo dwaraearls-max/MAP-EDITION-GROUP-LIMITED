@@ -4,7 +4,8 @@ import { Container, PageHero } from "@/components/ui/Container";
 
 export const metadata: Metadata = {
   title: "Request a Quote",
-  description: "Request a corporate quote from MAP Edition Group for car rentals, technology, equipment, supplies and enterprise deployment.",
+  description:
+    "Request a corporate quote from MAP Edition Group for car rental, fleet management, agribusiness, technology, equipment, supplies and enterprise deployment.",
 };
 
 export default function QuotePage() {

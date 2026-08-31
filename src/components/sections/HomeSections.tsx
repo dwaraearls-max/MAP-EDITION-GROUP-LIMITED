@@ -33,7 +33,7 @@ export function AboutPreview() {
             <div className="absolute inset-0 bg-gradient-to-br from-blue/20 to-cyan/10" />
             <div className="relative grid grid-cols-2 gap-4">
               {[
-                { label: "Business Sectors", value: "6+" },
+                { label: "Business Sectors", value: "7+" },
                 { label: "Enterprise Clients", value: "8+" },
                 { label: "Deployment Days", value: "14" },
                 { label: "Districts Served", value: "38" },
@@ -72,6 +72,38 @@ export function TechnologyPreview() {
           <Button href="/technology/lenovo">Explore Lenovo Solutions</Button>
           <Button href="/technology/deployment" variant="secondary">
             View Deployment Process
+          </Button>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+export function AgriculturePreview() {
+  return (
+    <section className="section-pad bg-bg-secondary">
+      <Container>
+        <SectionHeading
+          eyebrow="Ghana"
+          title="Agriculture & Agribusiness"
+          description="From land to market — developing sustainable, commercially viable agricultural enterprises across Ghana."
+        />
+        <div className="grid gap-6 md:grid-cols-3">
+          {[
+            { title: "Crop Farming", description: "Maize, rice, cassava, vegetables and other food and cash crops." },
+            { title: "Livestock & Aquaculture", description: "Poultry, cattle, goats, sheep, pigs and commercially viable fish farming." },
+            { title: "Agro-Processing", description: "Value addition through processing, storage, packaging and distribution." },
+          ].map((item) => (
+            <div key={item.title} className="glass card-hover rounded-2xl p-6 text-center">
+              <p className="font-semibold text-navy">{item.title}</p>
+              <p className="mt-2 text-sm text-subtext">{item.description}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-8 flex flex-wrap justify-center gap-4">
+          <Button href="/agriculture">Explore Agribusiness</Button>
+          <Button href="/quote" variant="secondary">
+            Request a Quote
           </Button>
         </div>
       </Container>
@@ -254,7 +286,7 @@ export function QuoteCTA() {
               <Button href="/quote" variant="secondary" className="border-white/30 bg-white text-navy hover:bg-white/90">
                 Request a Quote
               </Button>
-              <Button href="/contact" variant="secondary" className="border-white/30 text-white hover:bg-white/10">
+              <Button href="/contact" variant="secondary" className="border-white/40 bg-transparent text-white hover:border-white hover:bg-white/15 hover:text-white">
                 Talk to Us
               </Button>
             </div>

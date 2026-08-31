@@ -5,7 +5,7 @@ import { Container, PageHero } from "@/components/ui/Container";
 
 export const metadata: Metadata = {
   title: "Projects & Capabilities",
-  description: "Explore MAP Edition Group's project capabilities across technology, transportation, equipment and enterprise procurement.",
+  description: "Explore MAP Edition Group's project capabilities across technology, transportation, agriculture, equipment and enterprise procurement.",
 };
 
 export default function ProjectsPage() {

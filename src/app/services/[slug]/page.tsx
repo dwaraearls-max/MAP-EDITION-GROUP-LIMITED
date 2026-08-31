@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { Agribusiness } from "@/components/sections/Agribusiness";
+import { AgribusinessGallery } from "@/components/sections/AgribusinessGallery";
+import { CarRentalFleet } from "@/components/sections/CarRentalFleet";
+import { CarRentalGallery } from "@/components/sections/CarRentalGallery";
+import { ConstructionGallery } from "@/components/sections/ConstructionGallery";
+import { ConstructionSection } from "@/components/sections/ConstructionSection";
+import { GeneralSuppliesGallery } from "@/components/sections/GeneralSuppliesGallery";
+import { GeneralSuppliesSection } from "@/components/sections/GeneralSuppliesSection";
 import { services } from "@/lib/data";
 import { Button } from "@/components/ui/Button";
 import { Container, PageHero } from "@/components/ui/Container";
@@ -25,6 +33,50 @@ export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
+
+  if (service.slug === "car-rentals") {
+    return (
+      <>
+        <PageHero eyebrow="Ghana" title={service.title} description={service.description} />
+        <CarRentalGallery />
+        <CarRentalFleet />
+      </>
+    );
+  }
+
+  if (service.slug === "agriculture") {
+    return (
+      <>
+        <PageHero eyebrow="Ghana" title={service.title} description={service.description} />
+        <AgribusinessGallery />
+        <Agribusiness />
+      </>
+    );
+  }
+
+  if (service.slug === "construction") {
+    return (
+      <>
+        <PageHero eyebrow="Ghana" title={service.title} description={service.description} />
+        <ConstructionGallery />
+        <ConstructionSection />
+      </>
+    );
+  }
+
+  if (service.slug === "general-supplies") {
+    return (
+      <>
+        <PageHero
+          eyebrow="Ghana"
+          title="Reliable Supply Solutions for Businesses, Institutions and Government"
+          description={service.description}
+        />
+        <GeneralSuppliesGallery />
+        <GeneralSuppliesSection />
+      </>
+    );
+  }
 
   return (
     <>
@@ -62,11 +114,6 @@ export default async function ServiceDetailPage({ params }: Props) {
               <Button href="/quote" size="lg">
                 Request a Quote
               </Button>
-              {service.slug === "car-rentals" && (
-                <Button href="/car-rentals" variant="secondary" size="lg">
-                  View Vehicle Catalogue
-                </Button>
-              )}
               {service.slug === "technology" && (
                 <Button href="/technology" variant="secondary" size="lg">
                   Enterprise Solutions

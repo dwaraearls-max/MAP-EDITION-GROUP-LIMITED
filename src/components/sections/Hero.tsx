@@ -11,7 +11,7 @@ import {
   PenLine,
   Pause,
   Play,
-  Truck,
+  Sprout,
   Volume2,
   VolumeX,
 } from "lucide-react";
@@ -29,6 +29,7 @@ const iconMap = {
   home: Home,
   "hard-hat": HardHat,
   package: Package,
+  sprout: Sprout,
 };
 
 export function Hero() {
@@ -140,7 +141,7 @@ export function Hero() {
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-subtext sm:text-xl">
             MAP Edition Group Limited delivers quality products, professional services and
-            reliable solutions across technology, transportation, equipment, supplies and
+            reliable solutions across technology, transportation, agriculture, equipment, supplies and
             business support.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
@@ -163,9 +164,9 @@ export function Hero() {
             { icon: Building2, label: "Corporate" },
             { icon: Car, label: "Transport" },
             { icon: Cpu, label: "Technology" },
+            { icon: Sprout, label: "Agriculture" },
             { icon: HardHat, label: "Equipment" },
             { icon: Package, label: "Supplies" },
-            { icon: Truck, label: "Logistics" },
           ].map((item) => (
             <div
               key={item.label}
@@ -221,7 +222,7 @@ export function ServicesGrid({ limit }: { limit?: number }) {
             Our Business Solutions
           </p>
           <h2 className="text-3xl font-bold text-navy sm:text-4xl lg:text-5xl">
-            Six Sectors. One Trusted Partner.
+            Seven Sectors. One Trusted Partner.
           </h2>
         </div>
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
