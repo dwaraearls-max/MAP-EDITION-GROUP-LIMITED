@@ -1,7 +1,7 @@
 import { SiteShell } from "@/components/layout/SiteShell";
 import { siteConfig, seoKeywords } from "@/lib/data";
 import { JsonLd } from "@/components/JsonLd";
-import { createLocalBusinessJsonLd, createOrganizationJsonLd } from "@/lib/seo";
+import { createLocalBusinessJsonLd, createOrganizationJsonLd, createWebSiteJsonLd } from "@/lib/seo";
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
@@ -44,6 +44,9 @@ export const metadata: Metadata = {
     description: siteConfig.description,
   },
   robots: { index: true, follow: true },
+  verification: process.env.GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+    : undefined,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -51,6 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${outfit.variable} h-full`}>
       <body className="flex min-h-full flex-col font-sans antialiased">
         <JsonLd data={createOrganizationJsonLd()} />
+        <JsonLd data={createWebSiteJsonLd()} />
         <JsonLd data={createLocalBusinessJsonLd()} />
         <SiteShell>{children}</SiteShell>
       </body>

@@ -1,4 +1,5 @@
 import { siteConfig } from "./data";
+import { getAbsoluteUrl } from "./sitemap";
 
 export function createOrganizationJsonLd() {
   return {
@@ -18,6 +19,22 @@ export function createOrganizationJsonLd() {
     },
     areaServed: "Ghana",
     sameAs: [],
+  };
+}
+
+export function createWebSiteJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteConfig.name,
+    url: getAbsoluteUrl("/"),
+    description: siteConfig.description,
+    inLanguage: "en-GH",
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: getAbsoluteUrl("/"),
+    },
   };
 }
 

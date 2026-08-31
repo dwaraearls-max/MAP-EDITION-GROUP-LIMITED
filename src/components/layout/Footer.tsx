@@ -113,6 +113,11 @@ export function Footer() {
               Earlsdwara Digital.
             </a>
           </p>
+          <p className="mt-3 text-xs text-slate-500">
+            <Link href="/sitemap" className="transition-colors hover:text-slate-300">
+              Sitemap
+            </Link>
+          </p>
         </Container>
       </div>
     </footer>

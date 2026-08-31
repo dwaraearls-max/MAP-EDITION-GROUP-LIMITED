@@ -788,4 +788,5 @@ export const searchIndex: SearchItem[] = [
   { title: "Partners", description: "Technology and supply partners", href: "/partners", type: "Page" },
   { title: "Clients", description: "Trusted organizations", href: "/clients", type: "Page" },
   { title: "Projects", description: "Capabilities showcase", href: "/projects", type: "Page" },
+  { title: "Sitemap", description: "Complete list of website pages", href: "/sitemap", type: "Page" },
 ];
