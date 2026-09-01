@@ -1,4 +1,11 @@
-import { services, siteConfig } from "@/lib/data";
+import {
+  agribusiness,
+  carRentalFleet,
+  constructionServices,
+  generalSupplies,
+  services,
+  siteConfig,
+} from "@/lib/data";
 
 export type SitemapEntry = {
   path: string;
@@ -7,6 +14,7 @@ export type SitemapEntry = {
   changeFrequency: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
   priority: number;
   section: SitemapSection;
+  images?: string[];
 };
 
 export type SitemapSection =
@@ -16,6 +24,12 @@ export type SitemapSection =
   | "Technology"
   | "Company";
 
+export const SITE_URL = "https://mapeditiongroup.com";
+
+function photoPaths(photos: ReadonlyArray<{ src: string }>) {
+  return photos.map((photo) => photo.src);
+}
+
 const staticRoutes: SitemapEntry[] = [
   {
     path: "/",
@@ -24,6 +38,7 @@ const staticRoutes: SitemapEntry[] = [
     changeFrequency: "weekly",
     priority: 1,
     section: "Core Pages",
+    images: [siteConfig.heroPoster, "/logo.png"],
   },
   {
     path: "/about",
@@ -40,6 +55,7 @@ const staticRoutes: SitemapEntry[] = [
     changeFrequency: "weekly",
     priority: 0.9,
     section: "Core Pages",
+    images: services.map((service) => service.image),
   },
   {
     path: "/contact",
@@ -64,6 +80,7 @@ const staticRoutes: SitemapEntry[] = [
     changeFrequency: "weekly",
     priority: 0.9,
     section: "Business Sectors",
+    images: photoPaths(carRentalFleet.photos),
   },
   {
     path: "/agriculture",
@@ -72,6 +89,7 @@ const staticRoutes: SitemapEntry[] = [
     changeFrequency: "weekly",
     priority: 0.9,
     section: "Business Sectors",
+    images: photoPaths(agribusiness.photos),
   },
   {
     path: "/construction",
@@ -80,6 +98,7 @@ const staticRoutes: SitemapEntry[] = [
     changeFrequency: "weekly",
     priority: 0.9,
     section: "Business Sectors",
+    images: photoPaths(constructionServices.photos),
   },
   {
     path: "/general-supplies",
@@ -88,6 +107,7 @@ const staticRoutes: SitemapEntry[] = [
     changeFrequency: "weekly",
     priority: 0.9,
     section: "Business Sectors",
+    images: photoPaths(generalSupplies.photos),
   },
   {
     path: "/technology",
@@ -96,6 +116,7 @@ const staticRoutes: SitemapEntry[] = [
     changeFrequency: "weekly",
     priority: 0.9,
     section: "Technology",
+    images: ["/services/technology.png"],
   },
   {
     path: "/technology/lenovo",
@@ -104,6 +125,7 @@ const staticRoutes: SitemapEntry[] = [
     changeFrequency: "monthly",
     priority: 0.8,
     section: "Technology",
+    images: ["/services/technology.png"],
   },
   {
     path: "/technology/deployment",
@@ -154,16 +176,23 @@ const serviceRoutes: SitemapEntry[] = services.map((service) => ({
   changeFrequency: "weekly" as const,
   priority: 0.85,
   section: "Service Pages" as const,
+  images: [service.image],
 }));
 
 export const sitemapEntries: SitemapEntry[] = [...staticRoutes, ...serviceRoutes];
 
 export function getSiteUrl() {
-  return siteConfig.url.replace(/\/$/, "");
+  const configured = siteConfig.url.replace(/\/$/, "");
+  return configured || SITE_URL;
 }
 
 export function getAbsoluteUrl(path: string) {
-  return `${getSiteUrl()}${path}`;
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${getSiteUrl()}${normalizedPath}`;
+}
+
+export function getAbsoluteAssetUrl(path: string) {
+  return getAbsoluteUrl(path.startsWith("/") ? path : `/${path}`);
 }
 
 export function getSitemapSections() {
@@ -181,4 +210,21 @@ export function getSitemapSections() {
       entries: sitemapEntries.filter((entry) => entry.section === section),
     }))
     .filter((group) => group.entries.length > 0);
+}
+
+export function getSitemapStats() {
+  const imageCount = sitemapEntries.reduce(
+    (total, entry) => total + (entry.images?.length ?? 0),
+    0,
+  );
+
+  return {
+    domain: siteConfig.domain,
+    siteUrl: getSiteUrl(),
+    pageCount: sitemapEntries.length,
+    imageCount,
+    xmlUrl: getAbsoluteUrl("/sitemap.xml"),
+    htmlUrl: getAbsoluteUrl("/sitemap"),
+    robotsUrl: getAbsoluteUrl("/robots.txt"),
+  };
 }

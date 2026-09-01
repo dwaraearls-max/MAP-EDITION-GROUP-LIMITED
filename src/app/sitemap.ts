@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getAbsoluteUrl, sitemapEntries } from "@/lib/sitemap";
+import { getAbsoluteAssetUrl, getAbsoluteUrl, sitemapEntries } from "@/lib/sitemap";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
@@ -9,5 +9,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified,
     changeFrequency: entry.changeFrequency,
     priority: entry.priority,
+    ...(entry.images?.length
+      ? { images: entry.images.map((image) => getAbsoluteAssetUrl(image)) }
+      : {}),
   }));
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Container, PageHero } from "@/components/ui/Container";
-import { getAbsoluteUrl, getSitemapSections } from "@/lib/sitemap";
+import { getAbsoluteUrl, getSiteUrl, getSitemapSections, sitemapEntries } from "@/lib/sitemap";
 
 export const metadata: Metadata = {
   title: "Sitemap",
@@ -54,6 +54,10 @@ export default function SitemapPage() {
             <a href="/sitemap.xml" className="font-medium text-cyan hover:underline">
               {getAbsoluteUrl("/sitemap.xml")}
             </a>
+            <br />
+            <span className="mt-2 inline-block text-xs text-subtext/70">
+              {sitemapEntries.length} pages indexed for {getSiteUrl().replace("https://", "")}
+            </span>
           </p>
         </Container>
       </section>

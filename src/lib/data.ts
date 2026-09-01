@@ -5,6 +5,7 @@ export const siteConfig = {
   description:
     "MAP Edition Group Limited delivers quality products, professional services and reliable solutions across technology, transportation, agriculture, equipment, supplies and business support in Ghana.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://mapeditiongroup.com",
+  domain: "mapeditiongroup.com",
   email: "mapeditiongh@gmail.com",
   phones: ["+233 050-188-6853", "+233 059-742-6370"],
   whatsapp: "+2330501886853",
