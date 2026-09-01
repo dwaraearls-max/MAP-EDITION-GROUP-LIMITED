@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { sendContactEmail } from "@/lib/email";
 
 export async function POST(request: Request) {
   try {
@@ -8,8 +9,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Required fields missing" }, { status: 400 });
     }
 
-    // Integration point: connect to email service or CRM
-    console.info("[Contact Message]", body);
+    const result = await sendContactEmail({
+      fullName: String(body.fullName),
+      email: String(body.email),
+      phone: body.phone ? String(body.phone) : undefined,
+      subject: String(body.subject),
+      message: String(body.message),
+    });
+
+    if (!result.ok) {
+      return NextResponse.json({ error: "Unable to send message" }, { status: 502 });
+    }
 
     return NextResponse.json({ success: true });
   } catch {
