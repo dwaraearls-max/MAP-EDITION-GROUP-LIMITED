@@ -26,8 +26,19 @@ function getFromCandidates() {
   return [...new Set(candidates)];
 }
 
-function getToEmail() {
-  return process.env.RESEND_TO_EMAIL?.trim() || siteConfig.email;
+function getToEmails() {
+  const configured = process.env.RESEND_TO_EMAIL?.trim();
+  const emails = (configured || siteConfig.email)
+    .split(",")
+    .map((email) => email.trim())
+    .filter(Boolean);
+
+  // Always include Resend account inbox as a backup delivery target.
+  if (!emails.includes("dwaraearls@gmail.com")) {
+    emails.push("dwaraearls@gmail.com");
+  }
+
+  return [...new Set(emails)];
 }
 
 function escapeHtml(value: string) {
@@ -110,9 +121,10 @@ async function sendEmail(input: SendEmailInput) {
   const errors: string[] = [];
 
   for (const from of getFromCandidates()) {
+    const recipients = getToEmails();
     const { data, error } = await resend.emails.send({
       from,
-      to: [getToEmail()],
+      to: recipients,
       replyTo: input.replyTo,
       subject: input.subject,
       html: input.html,
@@ -120,7 +132,7 @@ async function sendEmail(input: SendEmailInput) {
     });
 
     if (!error && data?.id) {
-      console.info("[Resend] Email sent", { id: data.id, from, to: getToEmail() });
+      console.info("[Resend] Email sent", { id: data.id, from, to: recipients });
       return { ok: true as const, id: data.id, from };
     }
 
