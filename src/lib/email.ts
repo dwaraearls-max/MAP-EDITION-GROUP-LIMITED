@@ -3,6 +3,8 @@ import { siteConfig } from "@/lib/data";
 
 let resendClient: Resend | null = null;
 
+const FALLBACK_FROM = `${siteConfig.shortName} <noreply@mapeditiongroup.com>`;
+
 function getResend() {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return null;
@@ -14,12 +16,18 @@ function getResend() {
   return resendClient;
 }
 
-function getFromEmail() {
-  return process.env.RESEND_FROM_EMAIL ?? `${siteConfig.shortName} <onboarding@resend.dev>`;
+function getFromCandidates() {
+  const configured = process.env.RESEND_FROM_EMAIL?.trim();
+  const candidates = [
+    configured,
+    FALLBACK_FROM,
+    `${siteConfig.shortName} <onboarding@resend.dev>`,
+  ].filter(Boolean) as string[];
+  return [...new Set(candidates)];
 }
 
 function getToEmail() {
-  return process.env.RESEND_TO_EMAIL ?? siteConfig.email;
+  return process.env.RESEND_TO_EMAIL?.trim() || siteConfig.email;
 }
 
 function escapeHtml(value: string) {
@@ -64,6 +72,69 @@ function buildEmailHtml(title: string, rows: string, message?: string) {
   `;
 }
 
+function buildPlainText(title: string, fields: Record<string, string | undefined>, message?: string) {
+  const lines = [title, ""];
+
+  for (const [label, value] of Object.entries(fields)) {
+    if (value?.trim()) {
+      lines.push(`${label}: ${value.trim()}`);
+    }
+  }
+
+  if (message?.trim()) {
+    lines.push("", "Message:", message.trim());
+  }
+
+  lines.push("", `Sent from the ${siteConfig.name} website.`);
+  return lines.join("\n");
+}
+
+type SendEmailInput = {
+  subject: string;
+  html: string;
+  text: string;
+  replyTo: string;
+};
+
+async function sendEmail(input: SendEmailInput) {
+  const resend = getResend();
+
+  if (!resend) {
+    console.error("[Resend] RESEND_API_KEY is not configured");
+    return {
+      ok: false as const,
+      error: "Email service is not configured",
+    };
+  }
+
+  const errors: string[] = [];
+
+  for (const from of getFromCandidates()) {
+    const { data, error } = await resend.emails.send({
+      from,
+      to: [getToEmail()],
+      replyTo: input.replyTo,
+      subject: input.subject,
+      html: input.html,
+      text: input.text,
+    });
+
+    if (!error && data?.id) {
+      console.info("[Resend] Email sent", { id: data.id, from, to: getToEmail() });
+      return { ok: true as const, id: data.id, from };
+    }
+
+    const message = error?.message ?? "Unknown Resend error";
+    errors.push(`${from}: ${message}`);
+    console.error("[Resend] Send failed", { from, error: message });
+  }
+
+  return {
+    ok: false as const,
+    error: errors.join(" | "),
+  };
+}
+
 type ContactPayload = {
   fullName: string;
   email: string;
@@ -83,10 +154,17 @@ type QuotePayload = {
   preferredDate?: string;
   location?: string;
   contactMethod?: string;
+  vehicle?: string;
 };
 
 export async function sendContactEmail(payload: ContactPayload) {
-  const resend = getResend();
+  const fields = {
+    "Full Name": payload.fullName,
+    Email: payload.email,
+    Phone: payload.phone,
+    Subject: payload.subject,
+  };
+
   const rows = [
     formatRow("Full Name", payload.fullName),
     formatRow("Email", payload.email),
@@ -94,64 +172,47 @@ export async function sendContactEmail(payload: ContactPayload) {
     formatRow("Subject", payload.subject),
   ].join("");
 
-  const html = buildEmailHtml("New Contact Message", rows, payload.message);
-
-  if (!resend) {
-    console.info("[Contact Message - Resend not configured]", payload);
-    return { ok: true as const, mocked: true };
-  }
-
-  const { error } = await resend.emails.send({
-    from: getFromEmail(),
-    to: [getToEmail()],
-    replyTo: payload.email,
+  return sendEmail({
     subject: `[Contact] ${payload.subject}`,
-    html,
+    html: buildEmailHtml("New Contact Message", rows, payload.message),
+    text: buildPlainText("New Contact Message", fields, payload.message),
+    replyTo: payload.email,
   });
-
-  if (error) {
-    console.error("[Resend Contact Error]", error);
-    return { ok: false as const, error: error.message };
-  }
-
-  return { ok: true as const, mocked: false };
 }
 
 export async function sendQuoteEmail(payload: QuotePayload) {
-  const resend = getResend();
+  const fields = {
+    "Full Name": payload.fullName,
+    Company: payload.company,
+    Email: payload.email,
+    Phone: payload.phone,
+    Service: payload.service,
+    Vehicle: payload.vehicle,
+    Quantity: payload.quantity,
+    "Preferred Date": payload.preferredDate,
+    Location: payload.location,
+    "Preferred Contact": payload.contactMethod,
+  };
+
   const rows = [
     formatRow("Full Name", payload.fullName),
     formatRow("Company", payload.company),
     formatRow("Email", payload.email),
     formatRow("Phone", payload.phone),
     formatRow("Service", payload.service),
+    formatRow("Vehicle", payload.vehicle),
     formatRow("Quantity", payload.quantity),
     formatRow("Preferred Date", payload.preferredDate),
     formatRow("Location", payload.location),
     formatRow("Preferred Contact", payload.contactMethod),
   ].join("");
 
-  const html = buildEmailHtml("New Quote Request", rows, payload.description);
-
-  if (!resend) {
-    console.info("[Quote Request - Resend not configured]", payload);
-    return { ok: true as const, mocked: true };
-  }
-
-  const { error } = await resend.emails.send({
-    from: getFromEmail(),
-    to: [getToEmail()],
+  return sendEmail({
+    subject: `[Quote] ${payload.service}${payload.vehicle ? ` — ${payload.vehicle}` : ""} — ${payload.fullName}`,
+    html: buildEmailHtml("New Quote Request", rows, payload.description),
+    text: buildPlainText("New Quote Request", fields, payload.description),
     replyTo: payload.email,
-    subject: `[Quote] ${payload.service} — ${payload.fullName}`,
-    html,
   });
-
-  if (error) {
-    console.error("[Resend Quote Error]", error);
-    return { ok: false as const, error: error.message };
-  }
-
-  return { ok: true as const, mocked: false };
 }
 
 export function isEmailConfigured() {
