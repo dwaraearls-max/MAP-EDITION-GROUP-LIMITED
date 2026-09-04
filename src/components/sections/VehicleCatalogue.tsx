@@ -47,10 +47,56 @@ const catalogueVehicles = [
 export function VehicleCatalogue() {
   const [selected, setSelected] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  function handleBooking(e: React.FormEvent<HTMLFormElement>) {
+  async function handleBooking(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    setError("");
+
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form));
+
+    const description = [
+      data.startDate && data.endDate
+        ? `Rental period: ${data.startDate} to ${data.endDate}`
+        : null,
+      data.pickupLocation ? `Pickup location: ${data.pickupLocation}` : null,
+      data.requirements ? `Requirements: ${data.requirements}` : null,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    try {
+      const res = await fetch("/api/quote", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: data.fullName,
+          company: data.company,
+          email: data.email,
+          phone: data.phone,
+          service: "Car Rental & Fleet Management",
+          vehicle: data.vehicle,
+          description: description || "Vehicle booking enquiry",
+          location: data.pickupLocation,
+          preferredDate: data.startDate,
+        }),
+      });
+
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error ?? "Booking submission failed");
+      }
+
+      setSubmitted(true);
+      form.reset();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -148,11 +194,14 @@ export function VehicleCatalogue() {
                 />
               </div>
               <div className="flex gap-3">
-                <Button type="submit">Submit Booking Request</Button>
+                <Button type="submit" disabled={submitting}>
+                  {submitting ? "Submitting..." : "Submit Booking Request"}
+                </Button>
                 <Button type="button" variant="ghost" onClick={() => setSelected(null)}>
                   Cancel
                 </Button>
               </div>
+              {error && <p className="text-sm text-red-400">{error}</p>}
             </form>
           </Container>
         </section>

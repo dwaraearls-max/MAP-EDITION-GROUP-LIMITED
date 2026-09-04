@@ -10,6 +10,7 @@ type ButtonProps = {
   type?: "button" | "submit";
   onClick?: () => void;
   external?: boolean;
+  disabled?: boolean;
 };
 
 const variants = {
@@ -35,11 +36,13 @@ export function Button({
   type = "button",
   onClick,
   external,
+  disabled,
 }: ButtonProps) {
   const classes = cn(
     "inline-flex items-center justify-center rounded-full transition-all duration-300",
     variants[variant],
     sizes[size],
+    disabled && "pointer-events-none opacity-60",
     className,
   );
 
@@ -59,7 +62,7 @@ export function Button({
   }
 
   return (
-    <button type={type} className={classes} onClick={onClick}>
+    <button type={type} className={classes} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   );

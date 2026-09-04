@@ -20,10 +20,15 @@ export async function POST(request: Request) {
       preferredDate: body.preferredDate ? String(body.preferredDate) : undefined,
       location: body.location ? String(body.location) : undefined,
       contactMethod: body.contactMethod ? String(body.contactMethod) : undefined,
+      vehicle: body.vehicle ? String(body.vehicle) : undefined,
     });
 
     if (!result.ok) {
-      return NextResponse.json({ error: "Unable to send quote request" }, { status: 502 });
+      console.error("[Quote API]", result.error);
+      return NextResponse.json(
+        { error: "Unable to send quote request. Please try again or contact us directly." },
+        { status: 502 },
+      );
     }
 
     return NextResponse.json({ success: true });

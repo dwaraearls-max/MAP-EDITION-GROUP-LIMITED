@@ -18,7 +18,11 @@ export async function POST(request: Request) {
     });
 
     if (!result.ok) {
-      return NextResponse.json({ error: "Unable to send message" }, { status: 502 });
+      console.error("[Contact API]", result.error);
+      return NextResponse.json(
+        { error: "Unable to send message. Please try again or contact us directly." },
+        { status: 502 },
+      );
     }
 
     return NextResponse.json({ success: true });
