@@ -131,15 +131,14 @@ export function Hero() {
           transition={{ duration: 0.7 }}
           className="max-w-3xl"
         >
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-cyan">
+          <p className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-navy">
             One trusted partner. Multiple business solutions.
           </p>
-          <h1 className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-7xl">
-            <span className="gradient-text">SERVICE WITH PASSION.</span>
-            <br />
-            <span className="text-navy">SOLUTIONS WITHOUT LIMITS.</span>
+          <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-navy sm:text-5xl lg:text-7xl">
+            <span className="block">SERVICE WITH PASSION.</span>
+            <span className="block">SOLUTIONS WITHOUT LIMITS.</span>
           </h1>
-          <p className="mt-6 max-w-2xl text-base font-medium leading-relaxed text-text sm:text-xl sm:font-normal sm:text-subtext">
+          <p className="mt-6 max-w-2xl text-base font-semibold leading-relaxed text-text sm:text-xl sm:font-medium">
             MAP Edition Group Limited delivers quality products, professional services and
             reliable solutions across technology, transportation, agriculture, equipment, supplies and
             business support.

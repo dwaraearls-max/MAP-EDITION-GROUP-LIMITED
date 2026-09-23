@@ -108,7 +108,7 @@ export function Navbar() {
         </div>
       )}
 
-      <div className="hidden border-t border-border bg-bg-secondary py-1 text-center text-[11px] font-medium uppercase tracking-[0.3em] text-cyan sm:block">
+      <div className="hidden border-t border-border bg-bg-secondary py-1 text-center text-[11px] font-semibold uppercase tracking-[0.25em] text-navy sm:block">
         {siteConfig.tagline}
       </div>
     </header>

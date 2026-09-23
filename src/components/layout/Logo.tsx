@@ -44,7 +44,7 @@ export function Logo({
       {(showWordmark || variant === "navbar") && (
         <div className={cn("flex flex-col", variant === "navbar" ? "hidden sm:flex" : "flex")}>
           <span className="text-xs font-bold tracking-wider text-navy">MAP EDITION</span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.25em] text-cyan">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-navy/80">
             Group Limited
           </span>
         </div>

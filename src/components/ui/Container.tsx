@@ -33,7 +33,7 @@ export function SectionHeading({
       )}
     >
       {eyebrow && (
-        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-cyan">
+        <p className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-cyan-dim">
           {eyebrow}
         </p>
       )}
@@ -64,7 +64,7 @@ export function PageHero({
       <div className="absolute inset-0 hero-glow" />
       <Container className="relative">
         {eyebrow && (
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-cyan">
+          <p className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-cyan-dim">
             {eyebrow}
           </p>
         )}
