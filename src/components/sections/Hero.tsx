@@ -139,7 +139,7 @@ export function Hero() {
             <br />
             <span className="text-navy">SOLUTIONS WITHOUT LIMITS.</span>
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-subtext sm:text-xl">
+          <p className="mt-6 max-w-2xl text-base font-medium leading-relaxed text-text sm:text-xl sm:font-normal sm:text-subtext">
             MAP Edition Group Limited delivers quality products, professional services and
             reliable solutions across technology, transportation, agriculture, equipment, supplies and
             business support.

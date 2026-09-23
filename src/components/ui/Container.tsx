@@ -41,7 +41,9 @@ export function SectionHeading({
         {title}
       </h2>
       {description && (
-        <p className="mt-4 text-lg leading-relaxed text-subtext">{description}</p>
+        <p className="mt-4 text-base font-medium leading-relaxed text-text sm:text-lg sm:font-normal sm:text-subtext">
+          {description}
+        </p>
       )}
     </div>
   );
@@ -70,7 +72,9 @@ export function PageHero({
           {title}
         </h1>
         {description && (
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-subtext">{description}</p>
+          <p className="mt-6 max-w-2xl text-base font-medium leading-relaxed text-text sm:text-lg sm:font-normal sm:text-subtext">
+            {description}
+          </p>
         )}
       </Container>
     </section>

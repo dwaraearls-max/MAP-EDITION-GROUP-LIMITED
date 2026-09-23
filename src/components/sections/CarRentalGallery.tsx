@@ -87,7 +87,7 @@ export function CarRentalGallery() {
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
             Vehicles for Every Assignment
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-white/70">
+          <p className="mt-4 text-lg leading-relaxed text-white/90">
             From chauffeur-driven executive sedans to SUVs and Hiace group transport — a
             professionally maintained fleet across Ghana.
           </p>
@@ -101,7 +101,7 @@ export function CarRentalGallery() {
             >
               <Icon className="mb-3 h-6 w-6 text-cyan" aria-hidden />
               <h3 className="font-bold text-white">{title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/65">{description}</p>
+              <p className="mt-2 text-sm leading-relaxed text-white/85">{description}</p>
             </div>
           ))}
         </div>

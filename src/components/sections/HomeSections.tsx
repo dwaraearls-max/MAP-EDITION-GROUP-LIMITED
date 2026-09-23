@@ -278,7 +278,7 @@ export function QuoteCTA() {
             <h2 className="text-3xl font-bold text-white sm:text-4xl">
               Ready to Work With MAP Edition Group?
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-white/80">
+            <p className="mx-auto mt-4 max-w-xl text-white/90">
               Request a corporate quote and our team will review your requirements and
               contact you promptly.
             </p>
